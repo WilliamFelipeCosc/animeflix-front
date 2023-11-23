@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, map, throwError } from "rxjs";
 
@@ -7,7 +7,7 @@ import { Observable, catchError, map, throwError } from "rxjs";
 })
 
 export class CustomHttpClient {
-  baseUrl = "https://viacep.com.br/ws";
+  baseUrl = "https://localhost:7041/api";
 
   httpOptionJson = new HttpHeaders({
     "Content-Type": "application/json; charset=utf-8",
@@ -19,29 +19,44 @@ export class CustomHttpClient {
   /*
   * @param url: string
   */
-  get<T>(url: string) {
-    return this.http.get<T>(this.baseUrl + url, {headers: this.httpOptionJson, observe: 'response'})
-    .pipe(map((res: HttpResponse<T>) => res.body), catchError(this.handleError))
+  get<T>(url: string, params?:any) {
+    return this.http.get<T>(this.baseUrl + url, { headers: this.httpOptionJson, observe: 'response' , params })
+    .pipe(
+      map((res: HttpResponse<T>) => res.body),
+      catchError(this.handleError)
+    )
   }
 
   post<T>(url: string, body: any) {
-    return this.http.post<T>(this.baseUrl + url, body, {headers: this.httpOptionJson, observe: 'response'})
-    .pipe(map((res: HttpResponse<T>) => res.body), catchError(this.handleError))
+    return this.http.post<T>(this.baseUrl + url, body, { headers: this.httpOptionJson, observe: 'response' })
+    .pipe(
+      map((res: HttpResponse<T>) => res.body),
+      catchError(this.handleError)
+    )
   }
 
   put<T>(url: string, body: any) {
-    return this.http.put<T>(this.baseUrl + url, body, {headers: this.httpOptionJson, observe: 'response'})
-    .pipe(map((res: HttpResponse<T>) => res.body), catchError(this.handleError))
+    return this.http.put<T>(this.baseUrl + url, body, { headers: this.httpOptionJson, observe: 'response' })
+    .pipe(
+      map((res: HttpResponse<T>) => res.body),
+      catchError(this.handleError)
+    )
   }
 
   patch<T>(url: string, body: any) {
-    return this.http.patch<T>(this.baseUrl + url, body, {headers: this.httpOptionJson, observe: 'response'})
-    .pipe(map((res: HttpResponse<T>) => res.body), catchError(this.handleError))
+    return this.http.patch<T>(this.baseUrl + url, body, { headers: this.httpOptionJson, observe: 'response' })
+    .pipe(
+      map((res: HttpResponse<T>) => res.body),
+      catchError(this.handleError)
+    )
   }
 
-  delete<T>(url: string) {
-    return this.http.delete<T>(this.baseUrl + url, {headers: this.httpOptionJson, observe: 'response'})
-    .pipe(map((res: HttpResponse<T>) => res.body), catchError(this.handleError))
+  delete<T>(url: string, params?:any) {
+    return this.http.delete<T>(this.baseUrl + url, { headers: this.httpOptionJson, observe: 'response', params })
+    .pipe(
+      map((res: HttpResponse<T>) => res.body),
+      catchError(this.handleError)
+    )
   }
 
   private handleError(error: HttpErrorResponse) {
