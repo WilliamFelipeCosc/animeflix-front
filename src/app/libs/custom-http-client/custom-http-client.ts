@@ -10,8 +10,7 @@ export class CustomHttpClient {
   baseUrl = "https://localhost:7041/api";
 
   httpOptionJson = new HttpHeaders({
-    "Content-Type": "application/json; charset=utf-8",
-    "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json"
   });
 
   constructor(private http: HttpClient) {}
